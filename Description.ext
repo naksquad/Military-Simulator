@@ -1,0 +1,219 @@
+//------------------------- On Load
+
+author = NAK Squad;					// Visible when loading mission
+onLoadName = "NAK Squad Invade & Annex";						// Visible when loading mission
+OnLoadMission = "Welcome to <t color='#d90036'>NAK Squad</t> , join us at <t color='#ff9900'>WWW.NAKSQUAD.NET</t> and <t color='#ff9900'>TS3.NAKSQUAD.NET</t>";
+loadScreen = "Media\images\loading.jpg";				// Visible when loading mission
+overviewPicture = "Media\images\loading.jpg";			// Visible when selecting mission
+
+onLoadIntro = "";										// Displays a message while the intro is loading.
+onLoadIntroTime = 0;									// Time and date displayed while the intro loads. 1 visible, 0 hidden.
+onLoadMissionTime = 0;									// Time and date displayed while the mission loads. 1 visible, 0 hidden.
+
+class Header
+	{
+		gameType = COOP;								// Unknown, COOP, DM, TDM, CTF, SC, CTI, RPG, Sandbox, Seize, Defend.
+		minPlayers = 1;									// Min # of players the MISSION supports
+		maxPlayers = 84;								// Max # of players the MISSION supports, not server slots. Make sure # is greater than server slots.
+	};
+
+//------------------------- Admin
+
+enableDebugConsole[] = {"76561198325875438", "76561198036205616", "76561198019349455"};			
+allowFunctionsLog = 0; 									// Log functions to .rpt. disabled with 0
+allowFunctionsRecompile = 0;
+onPauseScript = "zq.sqf";
+
+
+//------------------------- Misc
+
+//disableChannels[]={0,1,2,6};
+//disableChannels[] = {{0,false,true},{1,false,true},{2,false,true},{6,true,true}};									// 0 = Global, 1 = Side, 2 = Command, 3 = Group, 4 = Vehicle, 5 = Direct, 6 = System. Admin/server/BattlEye can still use Global.
+disabledAI = 1;											// No AI in playable units
+aiKills = 0; 											// disable scorelist for AI players
+enableItemsDropping = 0; 								// disabled with 0
+joinUnassigned = 1;										// 0 = players forced into role on join
+showUAVFeed = 1;										// Enables/Disables the UAV Feed. Zeus-related.
+forceRotorLibSimulation = 0;
+respawnOnStart = 0;
+
+//------------------------- Garbage collector
+
+corpseManagerMode = 1; //Type of removed bodies: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable 
+corpseLimit = 5; //Max number of bodies which can be available at the same time. When exceeded, start deleting immediately. 
+corpseRemovalMinTime = 120; //Minimal time in seconds a body stays in the scene (can't be removed sooner). 
+corpseRemovalMaxTime = 200; //Maximal time in seconds after which a dead body is removed (can't stay longer) 
+
+wreckManagerMode = 1; //Type of removed wrecks: 0 - none, 1 - all, 2 - only respawnable, 3 - only non-respawnable 
+wreckLimit = 3; //Max number of wrecks which can be available at the same time. When exceeded, start deleting immediately. 
+wreckRemovalMinTime = 60; //Minimal time in seconds a wreck stays in the scene (can't be removed sooner). 
+wreckRemovalMaxTime = 160; //Maximal time in seconds after which a wreck is removed (can't stay longer)
+
+//------------------------- Includes
+#include "R3F_LOG\desc_include.h"
+#include "functions\CHVD\dialog.hpp"					// CHVD View Distance script
+#include "defines\defines.hpp"
+#include "defines\dialog.hpp"
+#include "defines\lesEcrans001.hpp"
+#include "defines\lesEcrans007.hpp"
+#include "defines\lesEcrans008.hpp"
+#include "defines\lesEcrans009.hpp"
+#include "defines\lesEcrans010.hpp"
+#include "defines\lesEcrans011.hpp"
+#include "defines\lesEcrans012.hpp"
+#include "defines\lesEcrans1.hpp"
+#include "defines\lesEcrans2.hpp"
+#include "defines\lesEcrans3.hpp"
+#include "defines\lesEcrans4.hpp"
+#include "defines\lesEcrans5.hpp"
+#include "defines\lesEcrans6.hpp"
+#include "defines\lesEcrans7.hpp"
+#include "defines\lesEcrans8.hpp"
+#include "defines\lesEcrans9.hpp"
+#include "defines\lesEcrans10.hpp"
+#include "defines\lesEcrans11.hpp"
+#include "outlw_magRepack\MagRepack_config.hpp"
+
+
+class unitList
+	{
+		#include "defines\units.hpp"
+	};
+
+class CfgFunctions
+	{
+		#include "functions\cfgfunctions.hpp"
+	};
+
+class CfgNotifications
+	{
+		#include "defines\Notifications.hpp"
+	};
+
+class CfgTaskTypes
+	{
+		#include "defines\Tasks.hpp"
+	};
+class RscTitles {
+ #include "defines\namesleft.hpp"
+};
+
+	class CfgSounds 
+	{
+		sounds[] = {}; 
+		class lavraisirene
+		{
+			name = "lavraisirenes";
+			sound[] = {"Media\labelsirenes.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+
+		class empkillers
+		{
+			name = "empkillerss";
+			sound[] = {"Media\empkiller.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+
+		class rewheals
+		{
+			name = "rewhealss";
+			sound[] = {"Media\rewheal.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+		class sectorsecl
+		{
+			name = "sectorsecls";
+			sound[] = {"Media\tvmedia\sector.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+		class sectorscan
+		{
+			name = "sectorscans";
+			sound[] = {"Media\tvmedia\scan.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+		class scanterminatedq
+		{
+			name = "scanterminateds";
+			sound[] = {"Media\tvmedia\scan_terminated.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+		class airdroppros
+		{
+			name = "airdroppross";
+			sound[] = {"Media\tvmedia\airdrop.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+			class destinations
+		{
+			name = "destinations";
+			sound[] = {"Media\tvmedia\destination.ogg", db+15, 1};
+			titles[] = {1,""};
+		};
+
+		class button_click 
+		{
+			name = "";
+			sound[] = {"Media\tvmedia\click.ogg", 0.8, 1};
+			titles[] = {};
+		};
+		class button_close 
+		{
+			name = "";
+			sound[] = {"Media\tvmedia\close.ogg", 0.8, 1};
+			titles[] = {};
+		};
+		class button_wrong 
+		{
+			name = "";
+			sound[] = {"Media\tvmedia\wrong.ogg", 0.8, 1};
+			titles[] = {};
+		};
+		class wire_cut 
+		{
+			name = "";
+			sound[] = {"Media\tvmedia\cutting.ogg", 1, 1};
+			titles[] = {};
+		};
+	};
+
+	class Params
+	{	
+	#include "\a3\Functions_F\Params\paramRevive.hpp"
+	};
+class CfgDebriefing
+{
+	class End6
+	{
+		title = "Restricted Mod";
+		subtitle = "You are using a mod that is not allowed on this server";
+		description = "For the list of approved and restricted mods, visit our website <a href='https://www.naksquad.net/mods'>https://www.naksquad.net/mods</a>  If you have question, need assistance, or feel you received this message in error you may speak to an Admin on our TeamSpeak server. ts3.naksquad.net.";
+		pictureBackground = "";
+		picture = "";
+		pictureColor[] = {0.0,0.0,0.0,1};
+	};
+	class End5
+	{
+		title = "DISAGREE";
+		subtitle = "You chose not to agree to our server rules.";
+		description = "If you would like to review the rules in more detail before accepting, visit our website or follow the link to <a href='https://www.naksquad.net/nak-server-rules/'>NAK Server Rules</a>.  If you have question or need assistance, you may speak to an Admin on our TeamSpeak server. ts3.naksquad.net";
+		pictureBackground = "";
+		picture = "";
+		pictureColor[] = {0.0,0.0,0.0,1};
+	};
+	class End2
+	{
+		title = "DbFail";
+		subtitle = "Database loading failed";
+		description = "Database loading failed, Please exit the server and join again";
+		pictureBackground = "";
+		picture = "";
+		pictureColor[] = {0.0,0.0,0.0,1};
+	};
+};
+
+class Extended_PreInit_EventHandlers {
+	VCM_CBASettings = call compile preprocessFileLineNumbers "Vcom\Functions\VCM_CBASettings.sqf";
+};
+
