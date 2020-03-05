@@ -1,8 +1,8 @@
 # Military-Simulator
 Military Training simulator 
 
-Randomly picked main targets
-Many side missions
+* Randomly picked main targets
+* Many side missions
 Custom made revive
 Dynamic weather
 Enable AI version 
